@@ -1,11 +1,6 @@
 using BotSharp.Abstraction.Plugins.Models;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace BotSharp.Abstraction.Plugins;
 
@@ -13,7 +8,6 @@ public class PluginSettingsModelFactory
 {
     private const string SettingsFile = "settings.json";
 
-    #region 即时读取
     public static T Create<T>(string pluginId)
         where T : PluginSettingsModel
     {
@@ -59,9 +53,7 @@ public class PluginSettingsModelFactory
 
         return rtnStr;
     }
-    #endregion
 
-    #region 保存
     public static void Save<T>(T pluginSettingsModel, string pluginId)
         where T : PluginSettingsModel
     {
@@ -95,9 +87,7 @@ public class PluginSettingsModelFactory
         { }
 
     }
-    #endregion
 
-    #region 格式化JSON字符串
     private static string ConvertJsonString(string str)
     {
         // https://blog.csdn.net/essity/article/details/84644510
@@ -109,7 +99,7 @@ public class PluginSettingsModelFactory
         string rtnStr = System.Text.Json.JsonSerializer.Serialize(jsonObj, options);
 
         return rtnStr;
-        #endregion
+
     }
 
 }
