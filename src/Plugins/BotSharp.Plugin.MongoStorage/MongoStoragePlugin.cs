@@ -2,18 +2,23 @@ using BotSharp.Abstraction.Plugins.Models;
 using BotSharp.Abstraction.Repositories.Enums;
 using BotSharp.Abstraction.Users.Enums;
 using BotSharp.Plugin.MongoStorage.Repository;
+using Microsoft.AspNetCore.Builder;
 
 namespace BotSharp.Plugin.MongoStorage;
 
 /// <summary>
 /// MongoDB as the repository
 /// </summary>
-public class MongoStoragePlugin : IBotSharpModule
+public class MongoStoragePlugin :BasePlugin, IBotSharpModule, IBotSharpAppPlugin
 {
     public string Id => "058094a7-4ad3-4284-b94d-ac1373cf63d8";
     public string Name => "MongoDB Storage";
     public string Description => "MongoDB as the repository, store data in document DB. It is suitable for production-level systems.";
     public string IconUrl => "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrFrT-_0VYV4PraApwSUmsf4pBGWgvLTaLZGUd7942FxjErsA5iaL4n5Q7CplOmVtwEQ&usqp=CAU";
+
+    public int ConfigureServicesOrder => 2;
+
+    public int ConfigureOrder => 2;
 
     public void ConfigureServices(IServiceCollection services, IConfiguration config)
     {
@@ -40,5 +45,10 @@ public class MongoStoragePlugin : IBotSharpModule
             Roles = new List<string> { UserRole.Admin }
         });
         return true;
+    }
+
+    public void Configure(IApplicationBuilder app)
+    {
+         
     }
 }
