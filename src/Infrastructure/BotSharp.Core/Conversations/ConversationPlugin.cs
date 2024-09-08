@@ -14,7 +14,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace BotSharp.Core.Conversations;
 
-public class ConversationPlugin : IBotSharpPlugin
+public class ConversationPlugin : IBotSharpModule
 {
     public string Id => "99e9b971-a9f1-4273-84da-876d2873d192";
     public string Name => "Conversation";
@@ -24,37 +24,6 @@ public class ConversationPlugin : IBotSharpPlugin
         new SettingsMeta("Conversation");
     public object GetNewSettingsInstance() =>
         new ConversationSetting();
-
-    public void RegisterDI(IServiceCollection services, IConfiguration config)
-    {
-        services.AddScoped(provider =>
-        {
-            var settingService = provider.GetRequiredService<ISettingService>();
-            return settingService.Bind<ConversationSetting>("Conversation");
-        });
-
-        services.AddScoped(provider =>
-        {
-            var settingService = provider.GetRequiredService<ISettingService>();
-            return settingService.Bind<GoogleApiSettings>("GoogleApi");
-        });
-
-        services.AddScoped<IConversationStorage, ConversationStorage>();
-        services.AddScoped<IConversationService, ConversationService>();
-        services.AddScoped<IConversationStateService, ConversationStateService>();
-        services.AddScoped<ITranslationService, TranslationService>();
-
-        // Rich content messaging
-        services.AddScoped<IRichContentService, RichContentService>();
-
-        // Register template render
-        services.AddSingleton<ITemplateRender, TemplateRender>();
-        services.AddScoped<IResponseTemplateService, ResponseTemplateService>();
-
-        services.AddScoped<IExecutor, InstructExecutor>();
-        services.AddScoped<IInstructService, InstructService>();
-        services.AddScoped<ITokenStatistics, TokenStatistics>();
-    }
 
     public bool AttachMenu(List<PluginMenuDef> menu)
     {

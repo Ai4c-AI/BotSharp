@@ -16,14 +16,18 @@ using BotSharp.Plugin.WeChat.Users;
 
 namespace BotSharp.Plugin.WeChat;
 
-public class WeChatPlugin : IBotSharpAppPlugin
+public class WeChatPlugin : BasePlugin, IBotSharpAppPlugin
 {
     public string Id => "f5e5113b-c1de-4d69-b4b1-9bc6efed7253";
     public string Name => "Tecent Wechat";
     public string Description => "Free messaging and calling app, support voice,photo,video and text messages.";
     public string IconUrl => "https://i.pinimg.com/originals/66/c9/44/66c94415043811725165e59b371a0aa2.png";
 
-    public void RegisterDI(IServiceCollection services, IConfiguration config)
+    public int ConfigureServicesOrder => 2;
+
+    public int ConfigureOrder => 2;
+
+    public void ConfigureServices(IServiceCollection services, IConfiguration config)
     {
         services.AddScoped<IWeChatAccountUserService,WeChatAccountUserService> ();
 

@@ -22,7 +22,7 @@ public class TwilioService
         // These are specific to Voice
         var user = _services.GetRequiredService<IUserIdentity>();
 
-        // Create a Voice grant for this token
+        // Read a Voice grant for this token
         var grant = new VoiceGrant();
         grant.OutgoingApplicationSid = _settings.AppSID;
 
@@ -34,7 +34,7 @@ public class TwilioService
             { grant }
         };
 
-        // Create an Access Token generator
+        // Read an Access Token generator
         var token = new Token(
             _settings.AccountSID,
             _settings.ApiKeySID,

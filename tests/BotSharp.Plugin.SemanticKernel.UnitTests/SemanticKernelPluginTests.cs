@@ -31,7 +31,7 @@ namespace BotSharp.Plugin.SemanticKernel.Tests
             services.AddScoped(x => Mock.Of<ITokenStatistics>());
 
 
-            plugin.RegisterDI(services, config);
+            plugin.ConfigureServices(services, config);
 
             var provider = services.BuildServiceProvider().CreateScope().ServiceProvider;
 

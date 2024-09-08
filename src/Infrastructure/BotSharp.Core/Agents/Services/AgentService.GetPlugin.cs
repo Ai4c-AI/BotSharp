@@ -1,3 +1,4 @@
+using BotSharp.Abstraction.Plugins.Interfaces;
 using BotSharp.Abstraction.Plugins.Models;
 using BotSharp.Core.Plugins;
 
@@ -7,7 +8,7 @@ public partial class AgentService
 {
     public PluginDef GetPlugin(string agentId)
     {
-        var loader = _services.GetRequiredService<PluginLoader>();
+        var loader = _services.GetRequiredService<IPluginModuleManager>();
         var plugins = loader.GetPlugins(_services);
         return plugins.FirstOrDefault(x => x.AgentIds.Contains(agentId)) ??
             new PluginDef

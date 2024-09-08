@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace BotSharp.Core.Agents;
 
-public class AgentPlugin : IBotSharpPlugin
+public class AgentPlugin : IBotSharpModule
 {
     public string Id => "f4b367f8-4945-476a-90a7-c3bb8e6d6e49";
     public string Name => "Agent";
@@ -24,18 +24,7 @@ public class AgentPlugin : IBotSharpPlugin
 
     public object GetNewSettingsInstance() =>
          new AgentSettings();
-
-    public void RegisterDI(IServiceCollection services, IConfiguration config)
-    {
-        services.AddScoped<ILlmProviderService, LlmProviderService>();
-        services.AddScoped<IAgentService, AgentService>();
-
-        services.AddScoped(provider =>
-        {
-            var settingService = provider.GetRequiredService<ISettingService>();
-            return settingService.Bind<AgentSettings>("Agent");
-        });
-    }
+    
 
     public bool AttachMenu(List<PluginMenuDef> menu)
     {

@@ -1,3 +1,4 @@
+using BotSharp.Abstraction.Plugins.Interfaces;
 using BotSharp.Abstraction.Settings;
 using BotSharp.Core.Plugins;
 using Microsoft.Extensions.Configuration;
@@ -27,7 +28,7 @@ public class SettingService : ISettingService
 
     public object GetDetail(string settingName, bool mask = false)
     {
-        var pluginService = _services.GetRequiredService<PluginLoader>();
+        var pluginService = _services.GetRequiredService<IPluginModuleManager>();
         var plugins = pluginService.GetPlugins(_services);
         var plugin = plugins.First(x => x.Module.Settings.Name == settingName);
         var instance = plugin.Module.GetNewSettingsInstance();

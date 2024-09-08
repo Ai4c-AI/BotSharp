@@ -256,4 +256,3 @@ public static class BotSharpOpenApiExtensions
         return app;
     }
 }
-

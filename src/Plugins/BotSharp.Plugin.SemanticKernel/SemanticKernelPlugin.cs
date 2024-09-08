@@ -9,7 +9,7 @@ namespace BotSharp.Plugin.SemanticKernel
     /// <summary>
     /// Use Semantic Kernel as BotSharp plugin
     /// </summary>
-    public class SemanticKernelPlugin : IBotSharpPlugin
+    public class SemanticKernelPlugin : IBotSharpModule
     {
         public string Id => "849e5ab9-276f-4cf1-8041-c089fe1a1aeb";
         /// <inheritdoc/>
@@ -19,7 +19,7 @@ namespace BotSharp.Plugin.SemanticKernel
         public string Description => "Semantic Kernel Service";
 
         /// <inheritdoc/>
-        public void RegisterDI(IServiceCollection services, IConfiguration config)
+        public void ConfigureServices(IServiceCollection services, IConfiguration config)
         {
             services.AddScoped<ITextCompletion, SemanticKernelTextCompletionProvider>();
             services.AddScoped<IChatCompletion, SemanticKernelChatCompletionProvider>();

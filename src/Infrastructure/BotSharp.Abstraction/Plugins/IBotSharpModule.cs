@@ -5,10 +5,10 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace BotSharp.Abstraction.Plugins;
 
-public interface IBotSharpPlugin
+public interface IBotSharpModule
 {
     /// <summary>
-    /// Plugin id (guid)
+    /// Plugin module id (guid)
     /// </summary>
     string Id { get; }
     string Name => "";
@@ -22,8 +22,6 @@ public interface IBotSharpPlugin
     /// Has build-in agent profile with this plugin
     /// </summary>
     string[] AgentIds => [];
-
-    void RegisterDI(IServiceCollection services, IConfiguration config);
 
     bool AttachMenu(List<PluginMenuDef> menu) => true;
 }

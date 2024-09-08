@@ -12,14 +12,14 @@ namespace BotSharp.Plugin.OpenAI;
 /// <summary>
 /// OpenAI Service
 /// </summary>
-public class OpenAiPlugin : IBotSharpPlugin
+public class OpenAiPlugin : IBotSharpModule
 {
     public string Id => "a743e90f-7cbc-4e47-b8a0-2f8e44f894c7";
     public string Name => "OpenAI";
     public string Description => "OpenAI Service including text generation, text to image and other AI services.";
     public string IconUrl => "https://logosandtypes.com/wp-content/uploads/2022/07/openai.svg";
 
-    public void RegisterDI(IServiceCollection services, IConfiguration config)
+    public void ConfigureServices(IServiceCollection services, IConfiguration config)
     {
         services.AddScoped(provider =>
         {

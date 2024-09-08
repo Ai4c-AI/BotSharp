@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace BotSharp.Core.Files;
 
-public class FileCorePlugin : IBotSharpPlugin
+public class FileCorePlugin : IBotSharpModule
 {
     public string Id => "6a8473c0-04eb-4346-be32-24755ce5973d";
 
@@ -12,17 +12,4 @@ public class FileCorePlugin : IBotSharpPlugin
 
     public string Description => "Provides file storage and analysis.";
 
-
-    public void RegisterDI(IServiceCollection services, IConfiguration config)
-    {
-        var fileCoreSettings = new FileCoreSettings();
-        config.Bind("FileCore", fileCoreSettings);
-        services.AddSingleton(fileCoreSettings);
-
-        if (fileCoreSettings.Storage == FileStorageEnum.LocalFileStorage)
-        {
-            services.AddScoped<IFileStorageService, LocalFileStorageService>();
-        }
-        services.AddScoped<IFileInstructService, FileInstructService>();
-    }
 }

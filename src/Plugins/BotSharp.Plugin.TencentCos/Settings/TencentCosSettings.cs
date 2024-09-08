@@ -1,4 +1,4 @@
-﻿namespace BotSharp.Plugin.TencentCos.Settings
+namespace BotSharp.Plugin.TencentCos.Settings
 {
     public class TencentCosSettings
     {

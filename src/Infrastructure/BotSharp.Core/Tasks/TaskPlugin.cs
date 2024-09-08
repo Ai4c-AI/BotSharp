@@ -6,16 +6,12 @@ using Microsoft.Extensions.Configuration;
 
 namespace BotSharp.Core.Tasks;
 
-public class TaskPlugin : IBotSharpPlugin
+public class TaskPlugin : IBotSharpModule
 {
     public string Id => "e1fb196a-8be9-4c3b-91ba-adfab5a359ef";
     public string Name => "Agent Task";
     public string Description => "Define some specific task templates and execute them. It can been used for the fixed business scenarios.";
-
-    public void RegisterDI(IServiceCollection services, IConfiguration config)
-    {
-        services.AddScoped<IAgentTaskService, AgentTaskService>();
-    }
+ 
 
     public bool AttachMenu(List<PluginMenuDef> menu)
     {

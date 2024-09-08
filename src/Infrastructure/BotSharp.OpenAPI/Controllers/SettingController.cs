@@ -1,3 +1,4 @@
+using BotSharp.Abstraction.Plugins.Interfaces;
 using BotSharp.Abstraction.Settings;
 using BotSharp.Core.Plugins;
 
@@ -20,7 +21,7 @@ public class SettingController : ControllerBase
     [HttpGet("/settings")]
     public List<string> GetSettings()
     {
-        var pluginService = _services.GetRequiredService<PluginLoader>();
+        var pluginService = _services.GetRequiredService<IPluginModuleManager>();
         var plugins = pluginService.GetPlugins(_services);
 
         return plugins.Where(x => x.Module.Settings != null && !string.IsNullOrEmpty(x.Module.Settings.Name))

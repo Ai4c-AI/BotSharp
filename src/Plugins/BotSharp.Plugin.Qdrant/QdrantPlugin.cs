@@ -5,13 +5,13 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace BotSharp.Plugin.Qdrant;
 
-public class QdrantPlugin : IBotSharpPlugin
+public class QdrantPlugin : IBotSharpModule
 {
     public string Id => "9e087f80-0f50-45bf-a87a-c1099af8f18e";
     public string Name => "Qdrant";
     public string Description => "Vector Database - Make the most of your Unstructured Data";
     public string IconUrl => "https://qdrant.tech/images/logo_with_text.png";
-    public void RegisterDI(IServiceCollection services, IConfiguration config)
+    public void ConfigureServices(IServiceCollection services, IConfiguration config)
     {
         services.AddScoped(provider =>
         {

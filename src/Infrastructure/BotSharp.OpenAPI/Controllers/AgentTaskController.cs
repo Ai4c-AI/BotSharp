@@ -47,7 +47,7 @@ public class AgentTaskController : ControllerBase
     }
 
     /// <summary>
-    /// Create a new agent task
+    /// Read a new agent task
     /// </summary>
     /// <param name="agentId"></param>
     /// <param name="task"></param>

@@ -4,14 +4,14 @@ using Microsoft.Extensions.Configuration;
 
 namespace BotSharp.Plugin.AnthropicAI;
 
-public class AnthropicPlugin : IBotSharpPlugin
+public class AnthropicPlugin : IBotSharpModule
 {
     public string Id => "012119da-8367-4be8-9a75-ab6ae55071e6";
     public string Name => "Anthropic AI";
     public string Description => "Anthropic is an AI company that's working to build reliable and steerable AI systems.";
     public string? IconUrl => "https://www.anthropic.com/images/icons/safari-pinned-tab.svg";
 
-    public void RegisterDI(IServiceCollection services, IConfiguration config)
+    public void ConfigureServices(IServiceCollection services, IConfiguration config)
     {
         var settings = new AnthropicSettings();
         config.Bind("AnthropicAi", settings);

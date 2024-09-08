@@ -8,10 +8,10 @@ using BotSharp.Abstraction.Settings;
 
 namespace BotSharp.Plugin.RoutingSpeeder;
 
-public class RoutingSpeederPlugin : IBotSharpPlugin
+public class RoutingSpeederPlugin : IBotSharpModule
 {
     public string Id => "e7dff028-462d-47d2-85aa-dc56a6d362ee";
-    public void RegisterDI(IServiceCollection services, IConfiguration config)
+    public void ConfigureServices(IServiceCollection services, IConfiguration config)
     {
         services.AddScoped(provider =>
         {

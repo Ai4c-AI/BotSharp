@@ -4,13 +4,13 @@ using StackExchange.Redis;
 
 namespace BotSharp.Plugin.Twilio;
 
-public class TwilioPlugin : IBotSharpPlugin
+public class TwilioPlugin : IBotSharpModule
 {
     public string Id => "943ffd4d-ac8b-44aa-8a1c-38c9279c1b65";
     public string Name => "Twilio";
     public string Description => "Communication APIs for SMS, Voice, Video & Authentication";
 
-    public void RegisterDI(IServiceCollection services, IConfiguration config)
+    public void ConfigureServices(IServiceCollection services, IConfiguration config)
     {
         services.AddScoped(provider =>
         {

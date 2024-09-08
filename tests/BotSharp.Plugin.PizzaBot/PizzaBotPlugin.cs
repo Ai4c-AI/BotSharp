@@ -3,7 +3,7 @@ using BotSharp.Plugin.PizzaBot.Hooks;
 
 namespace BotSharp.Plugin.PizzaBot;
 
-public class PizzaBotPlugin : IBotSharpPlugin
+public class PizzaBotPlugin : IBotSharpModule
 {
     public string Id => "1c8270eb-de63-4ca0-8903-654d83ce5ece";
     public string Name => "Pizza AI Assistant";
@@ -18,7 +18,7 @@ public class PizzaBotPlugin : IBotSharpPlugin
         "fe8c60aa-b114-4ef3-93cb-a8efeac80f75"
     };
 
-    public void RegisterDI(IServiceCollection services, IConfiguration config)
+    public void ConfigureServices(IServiceCollection services, IConfiguration config)
     {
         // Register hooks
         services.AddScoped<IAgentHook, PizzaBotAgentHook>();

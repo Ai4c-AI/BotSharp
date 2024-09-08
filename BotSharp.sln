@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33712.159
@@ -111,7 +111,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotSharp.Plugin.PythonInter
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Graph", "Graph", "{97A0B191-64D7-4F8A-BFE8-1BFCC5E247E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotSharp.Plugin.Graph", "src\Plugins\BotSharp.Plugin.Graph\BotSharp.Plugin.Graph.csproj", "{EBFE97DA-D0BA-48BA-8B5D-083B60348D1D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotSharp.Plugin.Graph", "src\Plugins\BotSharp.Plugin.Graph\BotSharp.Plugin.Graph.csproj", "{EBFE97DA-D0BA-48BA-8B5D-083B60348D1D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotSharp.AspNetCore", "src\Infrastructure\BotSharp.AspNetCore\BotSharp.AspNetCore.csproj", "{0A1028AE-2331-4E5D-A7CD-A8D89C68D75F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -449,6 +451,14 @@ Global
 		{EBFE97DA-D0BA-48BA-8B5D-083B60348D1D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EBFE97DA-D0BA-48BA-8B5D-083B60348D1D}.Release|x64.ActiveCfg = Release|Any CPU
 		{EBFE97DA-D0BA-48BA-8B5D-083B60348D1D}.Release|x64.Build.0 = Release|Any CPU
+		{0A1028AE-2331-4E5D-A7CD-A8D89C68D75F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A1028AE-2331-4E5D-A7CD-A8D89C68D75F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A1028AE-2331-4E5D-A7CD-A8D89C68D75F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0A1028AE-2331-4E5D-A7CD-A8D89C68D75F}.Debug|x64.Build.0 = Debug|Any CPU
+		{0A1028AE-2331-4E5D-A7CD-A8D89C68D75F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A1028AE-2331-4E5D-A7CD-A8D89C68D75F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A1028AE-2331-4E5D-A7CD-A8D89C68D75F}.Release|x64.ActiveCfg = Release|Any CPU
+		{0A1028AE-2331-4E5D-A7CD-A8D89C68D75F}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -503,6 +513,7 @@ Global
 		{05E6E405-5021-406E-8A5E-0A7CEC881F6D} = {C4C59872-3C8A-450D-83D5-2BE402D610D5}
 		{97A0B191-64D7-4F8A-BFE8-1BFCC5E247E1} = {2635EC9B-2E5F-4313-AC21-0B847F31F36C}
 		{EBFE97DA-D0BA-48BA-8B5D-083B60348D1D} = {97A0B191-64D7-4F8A-BFE8-1BFCC5E247E1}
+		{0A1028AE-2331-4E5D-A7CD-A8D89C68D75F} = {E29DC6C4-5E57-48C5-BCB0-6B8F84782749}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A9969D89-C98B-40A5-A12B-FC87E55B3A19}

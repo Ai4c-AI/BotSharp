@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace BotSharp.Core.Infrastructures;
 
-public class LlmProviderPlugin : IBotSharpPlugin
+public class LlmProviderPlugin : IBotSharpModule
 {
     public string Id => "0c52c0e3-cbb9-48ab-9381-260b80f018b8";
     public string Name => "LLM Provider";
@@ -16,20 +16,6 @@ public class LlmProviderPlugin : IBotSharpPlugin
     public object GetNewSettingsInstance() =>
          new List<LlmProviderSetting>();
 
-    public void RegisterDI(IServiceCollection services, IConfiguration config)
-    {
-        services.AddScoped(provider =>
-        {
-            var settingService = provider.GetRequiredService<ISettingService>();
-            var loger = provider.GetRequiredService<ILogger<LlmProviderPlugin>>();
-            var llmProviders = settingService.Bind<List<LlmProviderSetting>>("LlmProviders");
-            foreach (var llmProvider in llmProviders)
-            {
-                loger.LogInformation($"Loaded LlmProvider {llmProvider.Provider} settings with {llmProvider.Models.Count} models.");
-            }
-            return llmProviders;
-        });
-    }
 
     public bool MaskSettings(object settings)
     {

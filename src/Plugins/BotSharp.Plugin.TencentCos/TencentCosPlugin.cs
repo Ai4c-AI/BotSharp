@@ -7,7 +7,7 @@ using BotSharp.Plugin.TencentCos.Settings;
 
 namespace BotSharp.Plugin.TencentCosFile.Files;
 
-public class TencentCosPlugin : IBotSharpPlugin
+public class TencentCosPlugin : IBotSharpModule
 {
     public string Id => "3f55b702-8a28-4f9a-907c-affc24f845f1";
 
@@ -16,7 +16,7 @@ public class TencentCosPlugin : IBotSharpPlugin
     public string Description => "Provides connection to Tencent Cloud object storage service.";
 
 
-    public void RegisterDI(IServiceCollection services, IConfiguration config)
+    public void ConfigureServices(IServiceCollection services, IConfiguration config)
     {
         var fileCoreSettings = new FileCoreSettings();
         config.Bind("FileCore", fileCoreSettings);

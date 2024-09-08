@@ -145,7 +145,7 @@ public partial class ConversationService : IConversationService
     {
         var converation = await GetConversation(_conversationId);
 
-        // Create conversation if this conversation does not exist
+        // Read conversation if this conversation does not exist
         if (converation == null)
         {
             var state = _services.GetRequiredService<IConversationStateService>();

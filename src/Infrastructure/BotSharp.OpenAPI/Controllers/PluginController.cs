@@ -1,3 +1,4 @@
+using BotSharp.Abstraction.Plugins.Interfaces;
 using BotSharp.Abstraction.Plugins.Models;
 using BotSharp.Abstraction.Users.Enums;
 using BotSharp.Core.Plugins;
@@ -29,8 +30,8 @@ public class PluginController : ControllerBase
             return new PagedItems<PluginDef>();
         }
 
-        var loader = _services.GetRequiredService<PluginLoader>();
-        return loader.GetPagedPlugins(_services, filter);
+        var loader = _services.GetRequiredService<IPluginModuleManager>();
+        return loader.GetPagedPlugins(_services,filter);
     }
 
     [HttpGet("/plugin/menu")]
@@ -57,7 +58,7 @@ public class PluginController : ControllerBase
             }
         };
 
-        var loader = _services.GetRequiredService<PluginLoader>();
+        var loader = _services.GetRequiredService<IPluginModuleManager>();
         foreach (var plugin in loader.GetPlugins(_services))
         {
             if (!plugin.Enabled)
@@ -77,14 +78,14 @@ public class PluginController : ControllerBase
     [HttpPost("/plugin/{id}/install")]
     public PluginDef InstallPlugin([FromRoute] string id)
     {
-        var loader = _services.GetRequiredService<PluginLoader>();
+        var loader = _services.GetRequiredService<IPluginModuleManager>();
         return loader.UpdatePluginStatus(_services, id, true);
     }
 
     [HttpPost("/plugin/{id}/remove")]
     public PluginDef RemovePluginStats([FromRoute] string id)
     {
-        var loader = _services.GetRequiredService<PluginLoader>();
+        var loader = _services.GetRequiredService<IPluginModuleManager>();
         return loader.UpdatePluginStatus(_services, id, false);
     }
 }

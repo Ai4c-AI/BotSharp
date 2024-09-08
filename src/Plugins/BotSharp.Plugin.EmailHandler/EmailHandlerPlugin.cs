@@ -5,14 +5,14 @@ using Microsoft.Extensions.Configuration;
 
 namespace BotSharp.Plugin.EmailHandler
 {
-    public class EmailHandlerPlugin : IBotSharpPlugin
+    public class EmailHandlerPlugin : IBotSharpModule
     {
         public string Id => "a8e217de-e413-47a8-bbf1-af9207392a63";
         public string Name => "Email Handler";
         public string Description => "Empower agent to handle sending out emails";
         public string IconUrl => "https://cdn-icons-png.freepik.com/512/6711/6711567.png";
 
-        public void RegisterDI(IServiceCollection services, IConfiguration config)
+        public void ConfigureServices(IServiceCollection services, IConfiguration config)
         {
             services.AddScoped(provider =>
             {

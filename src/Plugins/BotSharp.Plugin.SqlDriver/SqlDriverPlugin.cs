@@ -1,13 +1,13 @@
 namespace BotSharp.Plugin.SqlDriver;
 
-public class SqlDriverPlugin : IBotSharpPlugin
+public class SqlDriverPlugin : IBotSharpModule
 {
     public string Id => "da7b6f7a-b1f0-455a-9939-ad2d493e929e";
     public string Name => "SQL Driver";
     public string Description => "Convert the user requirements into corresponding SQL statements";
     public string IconUrl => "https://uxwing.com/wp-content/themes/uxwing/download/file-and-folder-type/sql-icon.png";
 
-    public void RegisterDI(IServiceCollection services, IConfiguration config)
+    public void ConfigureServices(IServiceCollection services, IConfiguration config)
     {
         services.AddScoped(provider =>
         {

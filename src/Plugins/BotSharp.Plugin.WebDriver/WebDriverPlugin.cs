@@ -5,7 +5,7 @@ using BotSharp.Plugin.WebDriver.Hooks;
 
 namespace BotSharp.Plugin.Playwrights;
 
-public class WebDriverPlugin : IBotSharpPlugin
+public class WebDriverPlugin : IBotSharpModule
 {
     public string Id => "f0e26bc3-cfde-4b63-845c-c9c542abea44";
     public string Name => "Web Driver";
@@ -13,7 +13,7 @@ public class WebDriverPlugin : IBotSharpPlugin
     public string IconUrl => "https://cdn-icons-png.flaticon.com/512/8576/8576378.png";
     public string[] AgentIds => ["f3ae2a0f-e6ba-4ee1-a0b9-75d7431ff32b"];
 
-    public void RegisterDI(IServiceCollection services, IConfiguration config)
+    public void ConfigureServices(IServiceCollection services, IConfiguration config)
     {
         var settings = new WebBrowsingSettings();
         config.Bind("WebBrowsing", settings);

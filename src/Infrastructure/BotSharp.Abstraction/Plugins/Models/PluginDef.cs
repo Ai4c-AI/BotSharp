@@ -19,7 +19,7 @@ public class PluginDef
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? SettingsName => Module?.Settings?.Name;
 
-    public IBotSharpPlugin Module { get; set; }
+    public IBotSharpModule Module { get; set; }
 
     public bool Enabled { get; set; }
 }

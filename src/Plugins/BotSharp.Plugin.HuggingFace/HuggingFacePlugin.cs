@@ -7,13 +7,13 @@ using Refit;
 
 namespace BotSharp.Plugin.HuggingFace;
 
-public class HuggingFacePlugin : IBotSharpPlugin
+public class HuggingFacePlugin : IBotSharpModule
 {
     public string Id => "4495c3d6-49bd-464e-92fb-c99049854cb7";
     public string Name => "Hugging Face";
     public string Description => "The Home of Machine Learning - Create, discover and collaborate on ML better.";
     public string IconUrl => "https://upload.wikimedia.org/wikipedia/he/e/ee/Hugging_Face_logo.png";
-    public void RegisterDI(IServiceCollection services, IConfiguration config)
+    public void ConfigureServices(IServiceCollection services, IConfiguration config)
     {
         var settings = new HuggingFaceSettings();
         config.Bind("HuggingFace", settings);

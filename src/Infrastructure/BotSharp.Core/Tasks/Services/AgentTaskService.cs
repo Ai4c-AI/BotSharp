@@ -39,7 +39,7 @@ public class AgentTaskService : IAgentTaskService
     }
 
     /// <summary>
-    /// Create a new agent task
+    /// Read a new agent task
     /// </summary>
     /// <param name="task"></param>
     /// <returns></returns>

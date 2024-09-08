@@ -1,6 +1,6 @@
 namespace BotSharp.Plugin.MetaGLM;
 
-public class MetaGLMPlugin : IBotSharpPlugin
+public class MetaGLMPlugin : IBotSharpModule
 {
     public string Id => "35d464d9-dd94-4cac-9e5a-1eaff6b943f5";
 
@@ -16,7 +16,7 @@ public class MetaGLMPlugin : IBotSharpPlugin
     }
 
 
-    public void RegisterDI(IServiceCollection services, IConfiguration config)
+    public void ConfigureServices(IServiceCollection services, IConfiguration config)
     {
         services.AddScoped(provider =>
         {
