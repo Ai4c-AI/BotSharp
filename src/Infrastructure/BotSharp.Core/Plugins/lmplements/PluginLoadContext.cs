@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 namespace BotSharp.Core.Plugins.lmplements;
 
 /// <summary>
-/// LazyPluginLoadContext
+/// PluginLoadContext
 /// </summary>
-public class PluginLoadContext : LazyPluginLoadContext, IPluginContext
+public class PluginLoadContext : PositivePluginLoadContext, IPluginContext
 {
     public PluginLoadContext(string pluginId, string pluginMainDllFilePath) 
         : base(pluginId, pluginMainDllFilePath)

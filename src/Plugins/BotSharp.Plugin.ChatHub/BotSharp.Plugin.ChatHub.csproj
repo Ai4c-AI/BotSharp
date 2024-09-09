@@ -7,7 +7,8 @@
     <LangVersion>$(LangVersion)</LangVersion>
     <VersionPrefix>$(BotSharpVersion)</VersionPrefix>
     <GeneratePackageOnBuild>$(GeneratePackageOnBuild)</GeneratePackageOnBuild>
-    <OutputPath>$(SolutionDir)packages</OutputPath>
+    <EnableDynamicLoading>true</EnableDynamicLoading>
+    <OutputPath>$(SolutionDir)src\WebStarter\Plugins\BotSharp.Plugin.ChatHub</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,6 +20,26 @@
 
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
-    <ProjectReference Include="..\..\Infrastructure\BotSharp.OpenAPI\BotSharp.OpenAPI.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\BotSharp.Abstraction\BotSharp.Abstraction.csproj">
+      <Private>false</Private>
+      <ExcludeAssets>runtime</ExcludeAssets>
+      </ProjectReference>
+    <ProjectReference Include="..\..\Infrastructure\BotSharp.Core\BotSharp.Core.csproj" >
+      <Private>false</Private>
+      <ExcludeAssets>runtime</ExcludeAssets>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Infrastructure\BotSharp.OpenAPI\BotSharp.OpenAPI.csproj">
+      <Private>false</Private>
+      <ExcludeAssets>runtime</ExcludeAssets>
+    </ProjectReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="info.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="README.md">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

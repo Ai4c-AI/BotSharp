@@ -1,5 +1,6 @@
 using BotSharp.Abstraction.Evaluations;
 using BotSharp.Abstraction.Evaluations.Settings;
+using BotSharp.Abstraction.Functions;
 using BotSharp.Abstraction.Google.Settings;
 using BotSharp.Abstraction.Instructs;
 using BotSharp.Abstraction.Messaging;
@@ -20,6 +21,8 @@ using BotSharp.Core.Evaluations;
 using BotSharp.Core.Files.Services;
 using BotSharp.Core.Instructs;
 using BotSharp.Core.Messaging;
+using BotSharp.Core.Routing.Functions;
+using BotSharp.Core.Routing.Handlers;
 using BotSharp.Core.Routing.Hooks;
 using BotSharp.Core.Routing.Planning;
 using BotSharp.Core.Tasks.Services;
@@ -149,6 +152,10 @@ public static class BotSharpCoreExtensions
         services.AddScoped<IAgentTaskService, AgentTaskService>();
         services.AddScoped<IConversationHook, TranslationResponseHook>();
  
+        services.AddScoped<IRoutingHandler, RouteToAgentRoutingHandler>();
+        services.AddScoped<IFunctionCallback, FallbackToRouterFn>();
+        services.AddScoped<IFunctionCallback, HumanInterventionNeededFn>();
+        services.AddScoped<IFunctionCallback, RouteToAgentFn>();
 
         var accountSettings = new AccountSetting();
         config.Bind("Account", accountSettings);

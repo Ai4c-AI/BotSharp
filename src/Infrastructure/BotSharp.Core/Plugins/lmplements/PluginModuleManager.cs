@@ -45,43 +45,50 @@ public class PluginModuleManager : IPluginModuleManager
 
     public void AddPluginModules(Assembly assembly)
     {
-        var modules = assembly.GetTypes()
-                   .Where(x => x.IsClass)
-                   .Where(x => typeof(IBotSharpModule).IsAssignableFrom(x) && x != typeof(IBotSharpModule))                    
-                   .ToArray();
-                    
-        foreach (var module in modules)
+        try
         {
-            var botsharpmodule = Activator.CreateInstance(module) as IBotSharpModule;
+            var modules = assembly.GetTypes()
+                       .Where(x => x.IsClass)
+                       .Where(x => typeof(IBotSharpModule).IsAssignableFrom(x) && x != typeof(IBotSharpModule))
+                       .ToArray();
 
-            if (_plugins.Exists(x => x.Id == botsharpmodule.Id))
+            foreach (var module in modules)
             {
-                continue;
+                var botsharpmodule = Activator.CreateInstance(module) as IBotSharpModule;
+
+                if (_plugins.Exists(x => x.Id == botsharpmodule.Id))
+                {
+                    continue;
+                }
+                InitModule(assembly.FullName, botsharpmodule);
             }
-            InitModule(assembly.FullName, botsharpmodule);
         }
-
-        // Register routing handlers
-        var handlers = assembly.GetTypes()
-            .Where(x => x.IsClass)
-            .Where(x => x.GetInterface(nameof(IRoutingHandler)) != null)
-            .ToArray();
-
-        foreach (var handler in handlers)
+        catch(Exception ex)
         {
-            _services.AddScoped(typeof(IRoutingHandler), handler);             
+            Console.WriteLine(ex.Message);
         }
 
-        // Register function callback
-        var functions = assembly.GetTypes()
-            .Where(x => x.IsClass)
-            .Where(x => x.GetInterface(nameof(IFunctionCallback)) != null)
-            .ToArray();
+        //// Register routing handlers
+        //var handlers = assembly.GetTypes()
+        //    .Where(x => x.IsClass)
+        //    .Where(x => x.GetInterface(nameof(IRoutingHandler)) != null)
+        //    .ToArray();
 
-        foreach (var function in functions)
-        {
-            _services.AddScoped(typeof(IFunctionCallback), function);
-        }
+        //foreach (var handler in handlers)
+        //{
+        //    _services.AddScoped(typeof(IRoutingHandler), handler);             
+        //}
+
+        //// Register function callback
+        //var functions = assembly.GetTypes()
+        //    .Where(x => x.IsClass)
+        //    .Where(x => x.GetInterface(nameof(IFunctionCallback)) != null)
+        //    .ToArray();
+
+        //foreach (var function in functions)
+        //{
+        //    _services.AddScoped(typeof(IFunctionCallback), function);
+        //}
     }
 
     private void InitModule(string assembly, IBotSharpModule module)

@@ -1,0 +1,8 @@
+{
+  "PluginId": "BotSharp.Plugin.TencentCos",
+  "DisplayName": "Tencent Cos file storage",
+  "Description": "Provides connection to Tencent Cloud object storage service",
+  "Author": "botsharp",
+  "Version": "0.1.0",
+  "SupportedVersions": [ "0.0.1" ]
+}

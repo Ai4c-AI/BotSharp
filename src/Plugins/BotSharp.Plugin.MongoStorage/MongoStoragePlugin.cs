@@ -15,12 +15,8 @@ public class MongoStoragePlugin :BasePlugin, IBotSharpModule, IBotSharpAppPlugin
     public string Name => "MongoDB Storage";
     public string Description => "MongoDB as the repository, store data in document DB. It is suitable for production-level systems.";
     public string IconUrl => "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrFrT-_0VYV4PraApwSUmsf4pBGWgvLTaLZGUd7942FxjErsA5iaL4n5Q7CplOmVtwEQ&usqp=CAU";
-
-    public int ConfigureServicesOrder => 2;
-
-    public int ConfigureOrder => 2;
-
-    public void ConfigureServices(IServiceCollection services, IConfiguration config)
+ 
+    public override void ConfigureServices(IServiceCollection services, IConfiguration config)
     {
         var dbSettings = new BotSharpDatabaseSettings();
         config.Bind("Database", dbSettings);
@@ -46,9 +42,5 @@ public class MongoStoragePlugin :BasePlugin, IBotSharpModule, IBotSharpAppPlugin
         });
         return true;
     }
-
-    public void Configure(IApplicationBuilder app)
-    {
-         
-    }
+ 
 }

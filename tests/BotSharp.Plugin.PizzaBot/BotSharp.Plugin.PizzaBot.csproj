@@ -6,11 +6,15 @@
     <LangVersion>$(LangVersion)</LangVersion>
     <VersionPrefix>$(BotSharpVersion)</VersionPrefix>
     <GeneratePackageOnBuild>$(GeneratePackageOnBuild)</GeneratePackageOnBuild>
-    <OutputPath>$(SolutionDir)packages</OutputPath>
+    <EnableDynamicLoading>true</EnableDynamicLoading>
+    <OutputPath>$(SolutionDir)src\WebStarter\Plugins\BotSharp.Plugin.PizzaBot</OutputPath>
   </PropertyGroup>
 
   <ItemGroup Condition="$(SolutionName)==PizzaBot">
-    <PackageReference Include="BotSharp.Core" Version="$(BotSharpVersion)" />
+    <PackageReference Include="BotSharp.Core" Version="$(BotSharpVersion)">
+       <Private>false</Private>
+       <ExcludeAssets>runtime</ExcludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
@@ -98,7 +102,27 @@
   </ItemGroup>
 
   <ItemGroup Condition="$(SolutionName)==BotSharp">
-    <ProjectReference Include="..\..\src\Infrastructure\BotSharp.Core\BotSharp.Core.csproj" />
+    <ProjectReference Include="..\..\src\Infrastructure\BotSharp.Core\BotSharp.Core.csproj">
+      <Private>false</Private>
+      <ExcludeAssets>runtime</ExcludeAssets>
+    </ProjectReference> 
+    
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Infrastructure\BotSharp.Abstraction\BotSharp.Abstraction.csproj" >
+      <Private>false</Private>
+      <ExcludeAssets>runtime</ExcludeAssets>
+    </ProjectReference> 
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="info.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="README.md">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

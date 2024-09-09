@@ -5,13 +5,14 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace BotSharp.Plugin.Graph;
 
-public class GraphPlugin : IBotSharpModule
+public class GraphPlugin : BasePlugin, IBotSharpModule, IBotSharpAppPlugin
 {
     public string Id => "74497c25-5e8d-4ee9-b6a8-ce8fe4dabea9";
     public string Name => "Graph";
     public string Description => "Graph Database";
     public string IconUrl => "https://www.microsoft.com/en-us/research/uploads/prodnew/2024/06/GraphRag2024-BlogHeroFeature-1400x788-1.png";
-    public void ConfigureServices(IServiceCollection services, IConfiguration config)
+ 
+    public override void ConfigureServices(IServiceCollection services, IConfiguration config)
     {
         services.AddScoped(provider =>
         {

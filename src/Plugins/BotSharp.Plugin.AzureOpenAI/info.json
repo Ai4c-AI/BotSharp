@@ -1,0 +1,8 @@
+{
+  "PluginId": "BotSharp.Plugin.AzureOpenAI",
+  "DisplayName": "Azure OpenAI",
+  "Description": "Azure OpenAI Service including text generation, text to image and other AI services",
+  "Author": "botsharp",
+  "Version": "0.1.0",
+  "SupportedVersions": [ "0.0.1" ]
+}

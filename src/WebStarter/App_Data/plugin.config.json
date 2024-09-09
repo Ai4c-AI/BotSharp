@@ -1,1 +1,5 @@
-{"EnabledPlugins":[],"DisabledPlugins":[],"UninstalledPlugins":[]}
+{
+  "EnabledPlugins": [ "BotSharp.Plugin.AzureOpenAI", "BotSharp.Plugin.ChatHub", "BotSharp.Plugin.PizzaBot" ],
+  "DisabledPlugins": [],
+  "UninstalledPlugins": []
+}

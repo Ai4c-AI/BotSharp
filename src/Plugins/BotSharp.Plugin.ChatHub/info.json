@@ -1,0 +1,8 @@
+{
+  "PluginId": "BotSharp.Plugin.ChatHub",
+  "DisplayName": "Chat Hub",
+  "Description": "A communication channel connects agents and users in real-time.",
+  "Author": "botsharp",
+  "Version": "0.1.0",
+  "SupportedVersions": [ "0.0.1" ]
+}

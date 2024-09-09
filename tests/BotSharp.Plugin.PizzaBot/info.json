@@ -1,0 +1,8 @@
+{
+  "PluginId": "BotSharp.Plugin.PizzaBot",
+  "DisplayName": "Pizza AI Assistant",
+  "Description": "An example of an enterprise-grade AI Chatbot",
+  "Author": "botsharp",
+  "Version": "0.1.0",
+  "SupportedVersions": [ "0.0.1" ]
+}

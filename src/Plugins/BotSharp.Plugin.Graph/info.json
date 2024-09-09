@@ -1,0 +1,8 @@
+{
+  "PluginId": "BotSharp.Plugin.Graph",
+  "DisplayName": "Graph Database",
+  "Description": "Graph Database",
+  "Author": "botsharp",
+  "Version": "0.1.0",
+  "SupportedVersions": [ "0.0.1" ]
+}

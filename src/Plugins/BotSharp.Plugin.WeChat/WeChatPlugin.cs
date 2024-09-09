@@ -27,7 +27,7 @@ public class WeChatPlugin : BasePlugin, IBotSharpAppPlugin
 
     public int ConfigureOrder => 2;
 
-    public void ConfigureServices(IServiceCollection services, IConfiguration config)
+    public override void ConfigureServices(IServiceCollection services, IConfiguration config)
     {
         services.AddScoped<IWeChatAccountUserService,WeChatAccountUserService> ();
 

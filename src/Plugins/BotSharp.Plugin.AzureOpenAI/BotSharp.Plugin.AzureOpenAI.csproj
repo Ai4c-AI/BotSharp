@@ -6,8 +6,9 @@
     <LangVersion>$(LangVersion)</LangVersion>
     <VersionPrefix>$(BotSharpVersion)</VersionPrefix>
     <GeneratePackageOnBuild>$(GeneratePackageOnBuild)</GeneratePackageOnBuild>
+    <EnableDynamicLoading>true</EnableDynamicLoading>
     <GenerateDocumentationFile>$(GenerateDocumentationFile)</GenerateDocumentationFile>
-    <OutputPath>$(SolutionDir)packages</OutputPath>
+    <OutputPath>$(SolutionDir)src\WebStarter\Plugins\BotSharp.Plugin.AzureOpenAI</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,7 +17,23 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Infrastructure\BotSharp.Abstraction\BotSharp.Abstraction.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\BotSharp.Abstraction\BotSharp.Abstraction.csproj">
+      <Private>false</Private>
+      <ExcludeAssets>runtime</ExcludeAssets>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Infrastructure\BotSharp.Core\BotSharp.Core.csproj">
+      <Private>false</Private>
+      <ExcludeAssets>runtime</ExcludeAssets>
+    </ProjectReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="info.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="README.md">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

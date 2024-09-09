@@ -1,5 +1,7 @@
 using BotSharp.Abstraction.Functions;
+using BotSharp.Abstraction.Plugins;
 using BotSharp.Abstraction.Plugins.Interfaces;
+using System.Linq;
 using System.Reflection;
 
 namespace BotSharp.Core.Plugins.lmplements;
@@ -20,7 +22,7 @@ public class PluginFinder : IPluginFinder
     } 
 
     public IEnumerable<(TPlugin PluginInstance, string PluginId)> EnablePluginsFull<TPlugin>()
-        where TPlugin : IPlugin  
+        where TPlugin : IPlugin
     {
         var pluginConfigModel = PluginConfigModelFactory.Read();
         IList<string> enablePluginIds = pluginConfigModel.EnabledPlugins;
@@ -36,25 +38,31 @@ public class PluginFinder : IPluginFinder
                     continue;
                 }
 
+                //check if the plugin implements the interface
+                var types = pluginMainAssembly.ExportedTypes.Select(m =>
+                        (m.GetInterfaces().Where( t => t.FullName == typeof(TPlugin).FullName)));
+
                 Type pluginType = pluginMainAssembly.ExportedTypes.Where(m =>
-                    (m.BaseType == typeof(TPlugin) || m.GetInterfaces().Contains(typeof(TPlugin)))
-                    &&
-                    !m.IsInterface
-                    &&
-                    !m.IsAbstract
-                ).FirstOrDefault();
+                        (m.BaseType == typeof(TPlugin) || m.GetInterfaces().Where(t => t.FullName == typeof(TPlugin).FullName).Count() >0 )
+                        &&
+                        !m.IsInterface
+                        &&
+                        !m.IsAbstract
+                    ).FirstOrDefault();
 
                 if (pluginType == null)
                 {
                     continue;
                 }
                 object instance = ResolveUnregistered(pluginType);
+                TPlugin typedInstance = default;
+                
                 //try to get typed instance
-                TPlugin typedInstance = (TPlugin)instance;
-                if (typedInstance == null)
+                typedInstance = (TPlugin)instance;
+                if (typedInstance == null) 
                 {
                     continue;
-                }
+                }               
 
                 yield return (PluginInstance: typedInstance, PluginId: pluginId);
             }
@@ -63,7 +71,7 @@ public class PluginFinder : IPluginFinder
     }
 
     public IEnumerable<TPlugin> EnablePlugins<TPlugin>()
-        where TPlugin : IPlugin  
+        where TPlugin : IPlugin
     {
         return EnablePluginsFull<TPlugin>().Select(m => m.PluginInstance);
     }
@@ -79,7 +87,7 @@ public class PluginFinder : IPluginFinder
     }
 
     public IEnumerable<string> EnablePluginIds<TPlugin>()
-        where TPlugin : IPlugin 
+        where TPlugin : IPlugin
     {
        
         var pluginConfigModel = PluginConfigModelFactory.Read();
@@ -121,12 +129,12 @@ public class PluginFinder : IPluginFinder
             return null;
         }
         Type pluginType = pluginMainAssembly.ExportedTypes.Where(m =>
-            (m.BaseType == typeof(IPlugin) || m.GetInterfaces().Contains(typeof(IPlugin)))
-            &&
-            !m.IsInterface
-            &&
-            !m.IsAbstract
-        ).FirstOrDefault();
+        (m.BaseType == typeof(IPlugin) || m.GetInterfaces().Contains(typeof(IPlugin)))
+        &&
+        !m.IsInterface
+                        &&
+                        !m.IsAbstract
+                    ).FirstOrDefault();
         if (pluginType == null)
         {
             return null;
@@ -141,7 +149,7 @@ public class PluginFinder : IPluginFinder
 
         return typedInstance;
     }
-   
+
     protected virtual object ResolveUnregistered(Type type)
     {
 

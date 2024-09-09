@@ -7,8 +7,8 @@
     <VersionPrefix>$(BotSharpVersion)</VersionPrefix>
     <GeneratePackageOnBuild>$(GeneratePackageOnBuild)</GeneratePackageOnBuild>
     <GenerateDocumentationFile>$(GenerateDocumentationFile)</GenerateDocumentationFile>
-    <OutputPath>$(SolutionDir)packages</OutputPath>
-  </PropertyGroup>
+    <OutputPath>$(SolutionDir)src\WebStarter\Plugins\BotSharp.Plugin.MongoStorage</OutputPath>
+   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Aspire.MongoDB.Driver" Version="8.0.1" />
@@ -17,6 +17,15 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Infrastructure\BotSharp.Abstraction\BotSharp.Abstraction.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="info.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="README.md">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

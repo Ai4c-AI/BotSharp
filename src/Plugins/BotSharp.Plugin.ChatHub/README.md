@@ -1,0 +1,1 @@
+> A communication channel connects agents and users in real-time

@@ -1,0 +1,8 @@
+{
+  "PluginId": "BotSharp.Plugin.MongoStorage",
+  "DisplayName": "Mongo Storage",
+  "Description": "MongoDB data storage capabilities. This plugin can be used to store and manage information such as conversation history, user data, etc",
+  "Author": "botsharp",
+  "Version": "0.1.0",
+  "SupportedVersions": [ "0.0.1" ]
+}

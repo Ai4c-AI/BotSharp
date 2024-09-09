@@ -33,9 +33,10 @@ public class AspNetCorePluginManager : IPluginManager
         Assembly pluginMainAssembly = context.LoadFromAssemblyName(new AssemblyName(pluginId));
 
         _pluginControllerManager.AddControllers(pluginMainAssembly);
-        _pluginModuleManager.AddPluginModules(pluginMainAssembly);
 
         this.PluginContextManager.Add(pluginId, context);
+        _pluginModuleManager.AddPluginModules(pluginMainAssembly);
+
     }
 
     public void UnloadPlugin(string pluginId)

@@ -4,10 +4,11 @@ using BotSharp.Abstraction.Settings;
 using BotSharp.Plugin.TencentCos;
 using BotSharp.Plugin.TencentCos.Services;
 using BotSharp.Plugin.TencentCos.Settings;
+using Microsoft.AspNetCore.Builder;
 
 namespace BotSharp.Plugin.TencentCosFile.Files;
 
-public class TencentCosPlugin : IBotSharpModule
+public class TencentCosPlugin :BasePlugin, IBotSharpModule, IBotSharpAppPlugin
 {
     public string Id => "3f55b702-8a28-4f9a-907c-affc24f845f1";
 
@@ -15,8 +16,7 @@ public class TencentCosPlugin : IBotSharpModule
 
     public string Description => "Provides connection to Tencent Cloud object storage service.";
 
-
-    public void ConfigureServices(IServiceCollection services, IConfiguration config)
+    public override void ConfigureServices(IServiceCollection services, IConfiguration config)
     {
         var fileCoreSettings = new FileCoreSettings();
         config.Bind("FileCore", fileCoreSettings);
@@ -32,5 +32,5 @@ public class TencentCosPlugin : IBotSharpModule
             services.AddScoped<TencentCosClient>();
             services.AddScoped<IFileStorageService, TencentCosService>();
         }
-    }
+    } 
 }
