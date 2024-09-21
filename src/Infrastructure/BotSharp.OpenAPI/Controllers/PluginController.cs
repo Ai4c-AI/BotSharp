@@ -11,13 +11,11 @@ public class PluginController : ControllerBase
 {
     private readonly IServiceProvider _services;
     private readonly IUserIdentity _user;
-    private readonly PluginSettings _settings;
 
-    public PluginController(IServiceProvider services, IUserIdentity user, PluginSettings settings)
+    public PluginController(IServiceProvider services, IUserIdentity user)
     {
         _services = services;
         _user = user;
-        _settings = settings;
     }
 
     [HttpGet("/plugins")]
