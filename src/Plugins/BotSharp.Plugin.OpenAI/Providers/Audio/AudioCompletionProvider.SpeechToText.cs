@@ -23,8 +23,8 @@ public partial class AudioCompletionProvider
 
         var options = new AudioTranscriptionOptions
         {
-            ResponseFormat = format,
-            Granularities = granularity,
+            ResponseFormat = format, 
+            TimestampGranularities = granularity,
             Temperature = temperature,
             Prompt = text
         };
