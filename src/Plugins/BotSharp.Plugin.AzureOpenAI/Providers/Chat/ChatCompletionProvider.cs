@@ -51,7 +51,7 @@ public class ChatCompletionProvider : IChatCompletion
                 CurrentAgentId = agent.Id,
                 MessageId = conversations.LastOrDefault()?.MessageId ?? string.Empty,
                 FunctionName = value.FunctionCall.FunctionName,
-                FunctionArgs = value.FunctionCall.FunctionArguments
+                FunctionArgs = value.FunctionCall.FunctionArguments.ToString()
             };
 
             // Somethings LLM will generate a function name with agent name.
@@ -68,7 +68,7 @@ public class ChatCompletionProvider : IChatCompletion
                 CurrentAgentId = agent.Id,
                 MessageId = conversations.LastOrDefault()?.MessageId ?? string.Empty,
                 FunctionName = toolCall?.FunctionName,
-                FunctionArgs = toolCall?.FunctionArguments
+                FunctionArgs = toolCall?.FunctionArguments.ToString() ?? string.Empty
             };
         }
         else
@@ -88,8 +88,8 @@ public class ChatCompletionProvider : IChatCompletion
                 Prompt = prompt,
                 Provider = Provider,
                 Model = _model,
-                PromptCount = response.Value.Usage.InputTokens,
-                CompletionCount = response.Value.Usage.OutputTokens
+                PromptCount = response.Value.Usage.InputTokenCount,
+                CompletionCount = response.Value.Usage.OutputTokenCount
             });
         }
 
@@ -132,8 +132,8 @@ public class ChatCompletionProvider : IChatCompletion
                 Prompt = prompt,
                 Provider = Provider,
                 Model = _model,
-                PromptCount = response.Value.Usage.InputTokens,
-                CompletionCount = response.Value.Usage.OutputTokens
+                PromptCount = response.Value.Usage.InputTokenCount,
+                CompletionCount = response.Value.Usage.OutputTokenCount
             });
         }
 
@@ -145,7 +145,7 @@ public class ChatCompletionProvider : IChatCompletion
             {
                 CurrentAgentId = agent.Id,
                 FunctionName = value.FunctionCall?.FunctionName,
-                FunctionArgs = value.FunctionCall?.FunctionArguments
+                FunctionArgs = value.FunctionCall?.FunctionArguments.ToString()
             };
 
             // Somethings LLM will generate a function name with agent name.
@@ -180,7 +180,7 @@ public class ChatCompletionProvider : IChatCompletion
             {
                 Console.Write(choice.FunctionCallUpdate?.FunctionArgumentsUpdate);
 
-                await onMessageReceived(new RoleDialogModel(AgentRole.Assistant, choice.FunctionCallUpdate?.FunctionArgumentsUpdate));
+                await onMessageReceived(new RoleDialogModel(AgentRole.Assistant, choice.FunctionCallUpdate?.FunctionArgumentsUpdate.ToString()));
                 continue;
             }
 
@@ -210,7 +210,7 @@ public class ChatCompletionProvider : IChatCompletion
         var options = new ChatCompletionOptions()
         {
             Temperature = temperature,
-            MaxTokens = maxTokens
+             MaxOutputTokenCount = maxTokens
         };
 
         foreach (var function in agent.Functions)
@@ -248,7 +248,7 @@ public class ChatCompletionProvider : IChatCompletion
             {
                 messages.Add(new AssistantChatMessage(string.Empty)
                 {
-                    FunctionCall = new ChatFunctionCall(message.FunctionName, message.FunctionArgs ?? string.Empty)
+                    FunctionCall = new ChatFunctionCall(message.FunctionName,BinaryData.FromString(message.FunctionArgs ?? string.Empty))
                 });
 
                 messages.Add(new FunctionChatMessage(message.FunctionName, message.Content));
@@ -256,7 +256,7 @@ public class ChatCompletionProvider : IChatCompletion
             else if (message.Role == AgentRole.User)
             {
                 var text = !string.IsNullOrWhiteSpace(message.Payload) ? message.Payload : message.Content;
-                var textPart = ChatMessageContentPart.CreateTextMessageContentPart(text);
+                var textPart = ChatMessageContentPart.CreateTextPart(text);
                 var contentParts = new List<ChatMessageContentPart> { textPart };
 
                 if (allowMultiModal && !message.Files.IsNullOrEmpty())
@@ -266,20 +266,20 @@ public class ChatCompletionProvider : IChatCompletion
                         if (!string.IsNullOrEmpty(file.FileData))
                         {
                             var (contentType, bytes) = FileUtility.GetFileInfoFromData(file.FileData);
-                            var contentPart = ChatMessageContentPart.CreateImageMessageContentPart(BinaryData.FromBytes(bytes), contentType, ImageChatMessageContentPartDetail.Low);
+                            var contentPart = ChatMessageContentPart.CreateImagePart(BinaryData.FromBytes(bytes), contentType, ChatImageDetailLevel.Low);
                             contentParts.Add(contentPart);
                         }
                         else if (!string.IsNullOrEmpty(file.FileStorageUrl))
                         {
                             var contentType = FileUtility.GetFileContentType(file.FileStorageUrl);
                             var bytes = fileStorage.GetFileBytes(file.FileStorageUrl);
-                            var contentPart = ChatMessageContentPart.CreateImageMessageContentPart(BinaryData.FromBytes(bytes), contentType, ImageChatMessageContentPartDetail.Low);
+                            var contentPart = ChatMessageContentPart.CreateImagePart(BinaryData.FromBytes(bytes), contentType, ChatImageDetailLevel.Low);
                             contentParts.Add(contentPart);
                         }
                         else if (!string.IsNullOrEmpty(file.FileUrl))
                         {
                             var uri = new Uri(file.FileUrl);
-                            var contentPart = ChatMessageContentPart.CreateImageMessageContentPart(uri, ImageChatMessageContentPartDetail.Low);
+                            var contentPart = ChatMessageContentPart.CreateImagePart(uri, ChatImageDetailLevel.Low);
                             contentParts.Add(contentPart);
                         }
                     }
