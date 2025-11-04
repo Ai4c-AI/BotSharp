@@ -67,7 +67,8 @@ namespace UnitTest
             // Arrange
             var services = new ServiceCollection();
             services.AddLogging();
-            services.AddSingleton<IAIContextProvider, TestProviderA>();
+            var testProvider = new TestProviderWithTracking();
+            services.AddSingleton<IAIContextProvider>(testProvider);
 
             var serviceProvider = services.BuildServiceProvider();
             var provider = serviceProvider.GetRequiredService<IAIContextProvider>();
@@ -83,8 +84,9 @@ namespace UnitTest
             // Act
             await provider.InvokedAsync(context);
 
-            // Assert - no exception means success
-            Assert.IsTrue(true);
+            // Assert - verify InvokedAsync was called
+            Assert.IsTrue(testProvider.InvokedAsyncCalled);
+            Assert.AreEqual("test-conversation", testProvider.LastConversationId);
         }
 
         class TestProviderA : AIContextProviderBase
@@ -123,6 +125,19 @@ namespace UnitTest
             }
 
             public override int Priority { get; }
+        }
+
+        class TestProviderWithTracking : AIContextProviderBase
+        {
+            public bool InvokedAsyncCalled { get; private set; }
+            public string? LastConversationId { get; private set; }
+
+            public override async Task InvokedAsync(InvokedContext context)
+            {
+                InvokedAsyncCalled = true;
+                LastConversationId = context.ConversationId;
+                await Task.CompletedTask;
+            }
         }
     }
 }

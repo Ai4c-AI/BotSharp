@@ -59,11 +59,11 @@ public partial class RoutingService
             try
             {
                 var aiContext = await contextProvider.InvokingAsync(invokingContext);
-                if (aiContext != null && aiContext.ContextMessages.Count > 0)
+                if (aiContext != null && aiContext.ContextMessages != null && aiContext.ContextMessages.Count > 0)
                 {
-                    // Insert context messages before the last user message
-                    var lastIndex = workingDialogs.Count > 0 ? workingDialogs.Count - 1 : 0;
-                    workingDialogs.InsertRange(lastIndex, aiContext.ContextMessages);
+                    // Insert context messages at the end of the dialog list
+                    // This ensures they appear after all existing messages but before new ones
+                    workingDialogs.AddRange(aiContext.ContextMessages);
                 }
             }
             catch (Exception ex)
