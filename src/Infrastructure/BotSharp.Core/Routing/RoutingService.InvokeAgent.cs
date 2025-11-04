@@ -1,3 +1,4 @@
+using BotSharp.Abstraction.AIContext;
 using BotSharp.Abstraction.Routing.Models;
 using BotSharp.Abstraction.Templating;
 
@@ -35,15 +36,72 @@ public partial class RoutingService
             provider: provider,
             model: model);
 
+        // Get conversation ID
+        var conv = _services.GetRequiredService<IConversationService>();
+        var conversationId = conv.ConversationId;
+
+        // Call AI Context Providers before invoking the model (InvokingAsync)
+        var contextProviders = _services.GetServices<IAIContextProvider>()
+            .OrderBy(p => p.Priority)
+            .ToList();
+
+        var invokingContext = new InvokingContext
+        {
+            Agent = agent,
+            Dialogs = dialogs,
+            ConversationId = conversationId
+        };
+
+        // Collect context from all providers
+        var workingDialogs = new List<RoleDialogModel>(dialogs);
+        foreach (var contextProvider in contextProviders)
+        {
+            try
+            {
+                var aiContext = await contextProvider.InvokingAsync(invokingContext);
+                if (aiContext != null && aiContext.ContextMessages.Count > 0)
+                {
+                    // Insert context messages before the last user message
+                    var lastIndex = workingDialogs.Count > 0 ? workingDialogs.Count - 1 : 0;
+                    workingDialogs.InsertRange(lastIndex, aiContext.ContextMessages);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error in AI Context Provider {contextProvider.GetType().Name}.InvokingAsync");
+            }
+        }
+
         RoleDialogModel response;
         var message = dialogs.Last();
         if (options?.UseStream == true)
         {
-            response = await chatCompletion.GetChatCompletionsStreamingAsync(agent, dialogs);
+            response = await chatCompletion.GetChatCompletionsStreamingAsync(agent, workingDialogs);
         }
         else
         {
-            response = await chatCompletion.GetChatCompletions(agent, dialogs);
+            response = await chatCompletion.GetChatCompletions(agent, workingDialogs);
+        }
+
+        // Call AI Context Providers after the model has been invoked (InvokedAsync)
+        var invokedContext = new InvokedContext
+        {
+            Agent = agent,
+            RequestDialogs = workingDialogs,
+            Response = response,
+            ConversationId = conversationId
+        };
+
+        foreach (var contextProvider in contextProviders)
+        {
+            try
+            {
+                await contextProvider.InvokedAsync(invokedContext);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error in AI Context Provider {contextProvider.GetType().Name}.InvokedAsync");
+            }
         }
 
         if (response.Role == AgentRole.Function)
