@@ -50,8 +50,6 @@ namespace BotSharp.Core.Memory
 
         public async ValueTask OnInvokedAsync(InvokedContext invokedContext, CancellationToken ct = default)
         {
-            
-            // 逆序调用，便于成对清理
             foreach (var p in _providers.Reverse())
             {
                 try
