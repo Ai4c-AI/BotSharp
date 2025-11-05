@@ -1,4 +1,4 @@
-namespace BotSharp.Abstraction.AIContext;
+namespace BotSharp.Abstraction.Memory;
 
 /// <summary>
 /// AI Context that can be injected into the AI model request.

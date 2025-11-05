@@ -1,4 +1,4 @@
-using BotSharp.Abstraction.AIContext;
+using BotSharp.Abstraction.Memory;
 using BotSharp.Abstraction.Agents.Models;
 using BotSharp.Abstraction.Conversations.Models;
 using Microsoft.Extensions.DependencyInjection;
@@ -98,7 +98,7 @@ namespace UnitTest
 
             public override int Priority { get; }
 
-            public override async Task<AIContext?> InvokingAsync(InvokingContext context)
+            public override async ValueTask<AIContext?> InvokingAsync(InvokingContext context, CancellationToken ct = default)
             {
                 return await Task.FromResult(new AIContext
                 {
@@ -132,7 +132,7 @@ namespace UnitTest
             public bool InvokedAsyncCalled { get; private set; }
             public string? LastConversationId { get; private set; }
 
-            public override async Task InvokedAsync(InvokedContext context)
+            public override async ValueTask InvokedAsync(InvokedContext context, CancellationToken ct = default)
             {
                 InvokedAsyncCalled = true;
                 LastConversationId = context.ConversationId;

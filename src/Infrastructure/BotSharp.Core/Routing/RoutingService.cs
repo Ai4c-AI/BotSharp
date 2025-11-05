@@ -1,3 +1,4 @@
+using BotSharp.Abstraction.Memory;
 using BotSharp.Abstraction.Routing.Models;
 using BotSharp.Abstraction.Routing.Settings;
 
@@ -8,6 +9,8 @@ public partial class RoutingService : IRoutingService
     private readonly IServiceProvider _services;
     private readonly RoutingSettings _settings;
     private readonly IRoutingContext _context;
+    private readonly IAIContextOrchestrator _aIContextOrchestrator;
+    private readonly IConversationService _conversationService;
     private readonly ILogger _logger;
     private Agent _router;
 
@@ -18,11 +21,15 @@ public partial class RoutingService : IRoutingService
         IServiceProvider services,
         RoutingSettings settings,
         IRoutingContext context,
+        IAIContextOrchestrator aIContextOrchestrator,
+        IConversationService conversationService,
         ILogger<RoutingService> logger)
     {
         _services = services;
         _settings = settings;
         _context = context;
+        _aIContextOrchestrator = aIContextOrchestrator;
+        _conversationService = conversationService;
         _logger = logger;
     }
 

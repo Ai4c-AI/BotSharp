@@ -1,4 +1,4 @@
-namespace BotSharp.Abstraction.AIContext;
+namespace BotSharp.Abstraction.Memory;
 
 /// <summary>
 /// Context information available when invoking the AI model (before call).
