@@ -3,8 +3,7 @@ using System.Threading;
 namespace BotSharp.Abstraction.Memory;
 
 /// <summary>
-/// AI Context Provider interface for managing context before and after AI model invocation.
-/// Similar to Microsoft Agent Framework's AIContextProvider pattern.
+/// AI Context Provider interface for managing context before and after AI model invocation. 
 /// </summary>
 public interface IAIContextProvider
 {
