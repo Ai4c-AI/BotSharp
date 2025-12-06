@@ -7,14 +7,10 @@ namespace BotSharp.Plugin.LangGraph.Services;
 /// </summary>
 public class LangGraphStateMapper
 {
-    private readonly IConversationStateService _conversationState;
     private readonly ILogger<LangGraphStateMapper> _logger;
 
-    public LangGraphStateMapper(
-        IConversationStateService conversationState,
-        ILogger<LangGraphStateMapper> logger)
+    public LangGraphStateMapper(ILogger<LangGraphStateMapper> logger)
     {
-        _conversationState = conversationState;
         _logger = logger;
     }
 
@@ -29,50 +25,45 @@ public class LangGraphStateMapper
     /// <summary>
     /// Save interrupt state for later resumption
     /// </summary>
-    public async Task SaveInterruptStateAsync(string conversationId, string interruptType, string interruptMessage)
+    public void SaveInterruptState(IConversationStateService conversationState, string interruptType, string interruptMessage)
     {
-        var states = await _conversationState.GetStatesAsync(conversationId);
-        states["langgraph_interrupt_type"] = interruptType;
-        states["langgraph_interrupt_message"] = interruptMessage;
-        states["langgraph_interrupted"] = "true";
+        conversationState.SetState("langgraph_interrupt_type", interruptType);
+        conversationState.SetState("langgraph_interrupt_message", interruptMessage);
+        conversationState.SetState("langgraph_interrupted", "true");
+        conversationState.Save();
         
-        await _conversationState.SaveStateAsync(conversationId, states);
-        
-        _logger.LogInformation("Saved interrupt state for conversation {ConversationId}", conversationId);
+        _logger.LogInformation("Saved interrupt state for conversation {ConversationId}", conversationState.GetConversationId());
     }
 
     /// <summary>
     /// Clear interrupt state after resumption
     /// </summary>
-    public async Task ClearInterruptStateAsync(string conversationId)
+    public void ClearInterruptState(IConversationStateService conversationState)
     {
-        var states = await _conversationState.GetStatesAsync(conversationId);
-        states.Remove("langgraph_interrupt_type");
-        states.Remove("langgraph_interrupt_message");
-        states.Remove("langgraph_interrupted");
+        conversationState.RemoveState("langgraph_interrupt_type");
+        conversationState.RemoveState("langgraph_interrupt_message");
+        conversationState.RemoveState("langgraph_interrupted");
+        conversationState.Save();
         
-        await _conversationState.SaveStateAsync(conversationId, states);
-        
-        _logger.LogInformation("Cleared interrupt state for conversation {ConversationId}", conversationId);
+        _logger.LogInformation("Cleared interrupt state for conversation {ConversationId}", conversationState.GetConversationId());
     }
 
     /// <summary>
     /// Check if conversation is in interrupted state
     /// </summary>
-    public async Task<bool> IsInterruptedAsync(string conversationId)
+    public bool IsInterrupted(IConversationStateService conversationState)
     {
-        var states = await _conversationState.GetStatesAsync(conversationId);
-        return states.ContainsKey("langgraph_interrupted") && states["langgraph_interrupted"] == "true";
+        return conversationState.ContainsState("langgraph_interrupted") && 
+               conversationState.GetState("langgraph_interrupted") == "true";
     }
 
     /// <summary>
     /// Get interrupt message for display to user
     /// </summary>
-    public async Task<string?> GetInterruptMessageAsync(string conversationId)
+    public string? GetInterruptMessage(IConversationStateService conversationState)
     {
-        var states = await _conversationState.GetStatesAsync(conversationId);
-        return states.ContainsKey("langgraph_interrupt_message") 
-            ? states["langgraph_interrupt_message"] 
+        return conversationState.ContainsState("langgraph_interrupt_message") 
+            ? conversationState.GetState("langgraph_interrupt_message") 
             : null;
     }
 }

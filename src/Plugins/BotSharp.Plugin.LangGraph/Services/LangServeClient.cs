@@ -75,7 +75,7 @@ public class LangServeClient
         string conversationId,
         string userMessage,
         string? traceparent = null,
-        CancellationToken cancellationToken = default)
+        [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         var request = BuildRequest(conversationId, userMessage);
         
@@ -98,11 +98,17 @@ public class LangServeClient
             while (!reader.EndOfStream && !cancellationToken.IsCancellationRequested)
             {
                 var line = await reader.ReadLineAsync();
-                if (string.IsNullOrWhiteSpace(line))
+                
+                // Check for null (end of stream) or empty lines
+                if (line == null || string.IsNullOrWhiteSpace(line))
+                {
+                    if (line == null)
+                        break;
                     continue;
+                }
 
                 // Parse SSE format: "data: {...}"
-                if (line.StartsWith("data: "))
+                if (line.StartsWith("data: ") && line.Length > 6)
                 {
                     var jsonData = line.Substring(6);
                     if (jsonData == "[DONE]")
@@ -142,6 +148,8 @@ public class LangServeClient
 
     /// <summary>
     /// Resume execution after interrupt
+    /// Note: LangGraph automatically resumes from the interrupted state when the same thread_id is used.
+    /// The state is maintained by LangGraph's checkpointer, so we simply invoke with the user's response.
     /// </summary>
     public async Task<LangServeResponse> ResumeAsync(
         string agentEndpoint,
@@ -150,7 +158,7 @@ public class LangServeClient
         string? traceparent = null,
         CancellationToken cancellationToken = default)
     {
-        // Resume is similar to invoke, but the context should continue from interrupted state
+        // Resume is handled by LangGraph's state management - just invoke with the same thread_id
         return await InvokeAsync(agentEndpoint, conversationId, userResponse, traceparent, cancellationToken);
     }
 
