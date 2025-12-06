@@ -1,0 +1,68 @@
+{
+  "id": "it-support-agent",
+  "name": "IT Support Agent",
+  "description": "Handles IT support requests using Microsoft Agent Framework workflows",
+  "type": "task",
+  "is_public": true,
+  "profiles": [
+    "it-support"
+  ],
+  "instruction": "You are an IT Support Agent. When a user reports an IT issue, use the execute_maf_workflow function with workflow_type='it_support' to handle the request through the Microsoft Agent Framework.\n\nImportant:\n- Gather issue details before calling the workflow\n- Ask clarifying questions to understand the problem\n- Provide step-by-step guidance\n- Follow up to ensure the issue is resolved",
+  "functions": [
+    {
+      "name": "execute_maf_workflow",
+      "description": "Execute IT support workflow using Microsoft Agent Framework",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "workflow_type": {
+            "type": "string",
+            "const": "it_support",
+            "description": "The type of workflow to execute"
+          },
+          "input_data": {
+            "type": "object",
+            "description": "Input data for the workflow",
+            "properties": {
+              "issue_type": {
+                "type": "string",
+                "description": "Type of IT issue (e.g., 'Network Issue', 'Software Problem', 'Hardware Failure')"
+              },
+              "description": {
+                "type": "string",
+                "description": "Detailed description of the issue"
+              }
+            },
+            "required": ["issue_type", "description"]
+          },
+          "conversation_history": {
+            "type": "array",
+            "description": "Recent conversation context",
+            "items": {
+              "type": "object",
+              "properties": {
+                "role": {
+                  "type": "string"
+                },
+                "content": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "required": ["workflow_type", "input_data"]
+      }
+    }
+  ],
+  "samples": [
+    "I can't connect to the VPN",
+    "My computer is running very slowly",
+    "The printer is not working",
+    "I need help resetting my password"
+  ],
+  "llm_config": {
+    "provider": "openai",
+    "model": "gpt-4"
+  }
+}

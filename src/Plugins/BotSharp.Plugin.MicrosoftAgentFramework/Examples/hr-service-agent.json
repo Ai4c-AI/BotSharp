@@ -1,0 +1,57 @@
+{
+  "id": "hr-service-agent",
+  "name": "HR Service Agent",
+  "description": "Handles HR service requests using Microsoft Agent Framework workflows",
+  "type": "task",
+  "is_public": true,
+  "profiles": [
+    "hr-service"
+  ],
+  "instruction": "You are an HR Service Agent. When an employee submits an HR request, use the execute_maf_workflow function with workflow_type='hr_service' to process it through the Microsoft Agent Framework.\n\nImportant:\n- Ensure employee information is collected\n- Maintain confidentiality and professionalism\n- Explain the process and timeline clearly\n- Follow company HR policies",
+  "functions": [
+    {
+      "name": "execute_maf_workflow",
+      "description": "Execute HR service workflow using Microsoft Agent Framework",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "workflow_type": {
+            "type": "string",
+            "const": "hr_service",
+            "description": "The type of workflow to execute"
+          },
+          "input_data": {
+            "type": "object",
+            "description": "Input data for the workflow",
+            "properties": {
+              "request_type": {
+                "type": "string",
+                "description": "Type of HR request (e.g., 'Leave Request', 'Benefits Inquiry', 'Document Request')"
+              },
+              "employee_id": {
+                "type": "string",
+                "description": "Employee identifier"
+              },
+              "details": {
+                "type": "string",
+                "description": "Detailed information about the request"
+              }
+            },
+            "required": ["request_type"]
+          }
+        },
+        "required": ["workflow_type", "input_data"]
+      }
+    }
+  ],
+  "samples": [
+    "I need to request vacation leave",
+    "How do I update my benefits?",
+    "I need a copy of my employment certificate",
+    "What's the status of my leave request?"
+  ],
+  "llm_config": {
+    "provider": "openai",
+    "model": "gpt-4"
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "id": "order-management-agent",
+  "name": "Order Management Agent",
+  "description": "Handles order processing, refunds, and cancellations using Microsoft Agent Framework workflows",
+  "type": "task",
+  "is_public": true,
+  "profiles": [
+    "order-management"
+  ],
+  "instruction": "You are an Order Management Agent. When a user requests to process, refund, or cancel an order, use the execute_order_workflow function to handle the request through the Microsoft Agent Framework workflow.\n\nImportant:\n- Always collect required information (order_id, customer_id, action) before calling the workflow\n- For refunds and cancellations, ask for a reason\n- Provide clear, friendly responses to users\n- Confirm actions before executing workflows",
+  "functions": [
+    {
+      "name": "execute_order_workflow",
+      "description": "Execute order processing workflow using Microsoft Agent Framework. Supports order processing, refunds, and cancellations.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "order_id": {
+            "type": "string",
+            "description": "The unique order identifier (e.g., ORD-12345)"
+          },
+          "customer_id": {
+            "type": "string",
+            "description": "The customer identifier"
+          },
+          "items": {
+            "type": "array",
+            "description": "List of order items",
+            "items": {
+              "type": "object",
+              "properties": {
+                "product_id": {
+                  "type": "string"
+                },
+                "product_name": {
+                  "type": "string"
+                },
+                "quantity": {
+                  "type": "integer"
+                },
+                "price": {
+                  "type": "number"
+                }
+              }
+            }
+          },
+          "total_amount": {
+            "type": "number",
+            "description": "Total order amount in currency"
+          },
+          "action": {
+            "type": "string",
+            "enum": ["process", "refund", "cancel"],
+            "description": "The action to perform on the order"
+          },
+          "reason": {
+            "type": "string",
+            "description": "Reason for refund or cancellation (optional for processing)"
+          }
+        },
+        "required": ["order_id", "customer_id", "action"]
+      }
+    }
+  ],
+  "templates": [
+    {
+      "name": "order.process.confirmation",
+      "content": "I've successfully processed your order {{order_id}}. The workflow has completed all necessary steps including validation, payment processing, and shipment preparation. You should receive a confirmation email shortly."
+    },
+    {
+      "name": "order.refund.confirmation",
+      "content": "Your refund request for order {{order_id}} has been processed. The refund amount of ¥{{total_amount}} will be returned to your original payment method within 3-5 business days."
+    },
+    {
+      "name": "order.cancel.confirmation",
+      "content": "Order {{order_id}} has been successfully cancelled. All reservations have been released and payment authorization has been cancelled."
+    }
+  ],
+  "samples": [
+    "I want to refund my order ORD-12345",
+    "Can you help me cancel order ORD-67890?",
+    "Process my new order",
+    "What's the status of my order?"
+  ],
+  "llm_config": {
+    "provider": "openai",
+    "model": "gpt-4"
+  }
+}
