@@ -1,0 +1,15 @@
+{
+  "name": "HR_Assistant",
+  "description": "Handles employee leave requests, policy inquiries, and HR-related questions. Can check leave balances, book leave, and answer HR policy questions.",
+  "version": "1.0.0",
+  "capabilities": [
+    "leave_management",
+    "policy_inquiry",
+    "employee_information"
+  ],
+  "metadata": {
+    "author": "HR Team",
+    "category": "Human Resources",
+    "supported_languages": ["en", "zh-CN"]
+  }
+}

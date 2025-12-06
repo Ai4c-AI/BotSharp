@@ -1,0 +1,16 @@
+{
+  "id": "hr-assistant-remote",
+  "name": "HR Assistant (Remote)",
+  "description": "Handles employee leave requests and policy inquiries via remote MAF service",
+  "type": "a2a-remote",
+  "isPublic": true,
+  "disabled": false,
+  "profiles": ["maf_integration"],
+  "llmConfig": {
+    "provider": "openai",
+    "model": "gpt-4"
+  },
+  "templateDict": {
+    "a2a_endpoint": "https://your-maf-service.azurewebsites.net"
+  }
+}
