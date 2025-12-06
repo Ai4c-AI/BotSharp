@@ -27,7 +27,8 @@ public class AgentFrameworkConversationHook : ConversationHookBase
     }
 
     /// <summary>
-    /// Intercept message received to check if it should be routed to A2A agent
+    /// Intercept message received to check if it should be routed to A2A agent.
+    /// This hook modifies the message object in-place to set the response content and stop further processing.
     /// </summary>
     public override async Task OnMessageReceived(RoleDialogModel message)
     {

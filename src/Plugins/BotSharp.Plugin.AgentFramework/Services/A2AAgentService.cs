@@ -1,5 +1,6 @@
 using BotSharp.Abstraction.Agents;
 using BotSharp.Abstraction.Agents.Enums;
+using BotSharp.Plugin.AgentFramework.Models;
 using BotSharp.Plugin.AgentFramework.Settings;
 
 namespace BotSharp.Plugin.AgentFramework.Services;
@@ -70,7 +71,7 @@ public class A2AAgentService : IA2AAgentService
             taskResult.TaskId, taskResult.Status);
 
         // If task is not immediately completed, poll for completion
-        if (taskResult.Status != "completed")
+        if (taskResult.Status != A2ATaskStatus.Completed)
         {
             var pollingInterval = _settings.PollingIntervalMs;
             var maxAttempts = _settings.MaxPollingAttempts;

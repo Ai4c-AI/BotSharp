@@ -21,8 +21,6 @@ public class A2AClient : IA2AClient
         _baseUrl = baseUrl.TrimEnd('/');
         _settings = settings;
         _logger = logger;
-        
-        _httpClient.Timeout = TimeSpan.FromSeconds(settings.TimeoutSeconds);
     }
 
     public async Task<AgentCard> GetAgentCardAsync()
@@ -145,13 +143,13 @@ public class A2AClient : IA2AClient
             _logger.LogDebug("Poll attempt {Attempt}/{MaxAttempts} - Status: {Status}, Progress: {Progress}", 
                 attempt + 1, maxAttempts, result.Status, result.Progress);
 
-            if (result.Status == "completed")
+            if (result.Status == A2ATaskStatus.Completed)
             {
                 _logger.LogInformation("Task {TaskId} completed successfully", taskId);
                 return result;
             }
 
-            if (result.Status == "failed")
+            if (result.Status == A2ATaskStatus.Failed)
             {
                 _logger.LogError("Task {TaskId} failed: {Error}", taskId, result.Error);
                 throw new InvalidOperationException($"Task failed: {result.Error}");

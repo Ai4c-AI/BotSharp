@@ -5,8 +5,10 @@ using BotSharp.Abstraction.Settings;
 using BotSharp.Plugin.AgentFramework.Hooks;
 using BotSharp.Plugin.AgentFramework.Services;
 using BotSharp.Plugin.AgentFramework.Settings;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace BotSharp.Plugin.AgentFramework;
 
@@ -32,15 +34,20 @@ public class AgentFrameworkPlugin : IBotSharpPlugin
             return settingService.Bind<AgentFrameworkSettings>("AgentFramework");
         });
 
-        // Register HTTP client for A2A communication
+        // Register HTTP client for A2A communication with timeout configuration
         services.AddHttpClient("A2AClient", client =>
         {
             client.DefaultRequestHeaders.Add("User-Agent", "BotSharp-A2A-Client/1.0");
             client.DefaultRequestHeaders.Add("Accept", "application/json");
+        })
+        .ConfigureHttpClient((sp, client) =>
+        {
+            var settings = sp.GetRequiredService<AgentFrameworkSettings>();
+            client.Timeout = TimeSpan.FromSeconds(settings.TimeoutSeconds);
         });
 
-        // Register memory cache for agent card caching
-        services.AddMemoryCache();
+        // Register memory cache for agent card caching (use TryAdd to avoid conflicts)
+        services.TryAddSingleton<IMemoryCache, MemoryCache>();
 
         // Register A2A services
         services.AddSingleton<IA2AClientFactory, A2AClientFactory>();
