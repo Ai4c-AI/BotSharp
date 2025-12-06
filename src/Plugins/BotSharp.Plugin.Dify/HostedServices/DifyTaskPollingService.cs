@@ -127,14 +127,15 @@ public class DifyTaskPollingService : BackgroundService
 
     private async Task OnTaskCompletedAsync(DifyWorkflowTask task)
     {
-        // Here you would resume the suspended conversation/session
-        // This is a placeholder for the actual implementation
-        _logger.LogInformation($"Task {task.TaskId} completed, would resume conversation {task.ConversationId}");
-
+        // TODO: Implement conversation resumption logic
         // In a real implementation, you would:
-        // 1. Load the conversation context
-        // 2. Resume the conversation with the workflow result
+        // 1. Load the conversation context using task.ConversationId
+        // 2. Resume the conversation with the workflow result from task.ResultData
         // 3. Continue the agent's execution flow
+        // 4. Notify the user via appropriate channel (webhook, websocket, etc.)
+        // 5. Clean up completed task from storage
+        
+        _logger.LogInformation($"Task {task.TaskId} completed with status {task.Status}, would resume conversation {task.ConversationId}");
 
         await Task.CompletedTask;
     }

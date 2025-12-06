@@ -107,9 +107,15 @@ public class CallDifyWorkflowFn : IFunctionCallback
         }
 
         // Create task for tracking
+        var taskId = result.TaskId ?? Guid.NewGuid().ToString();
+        if (result.TaskId == null)
+        {
+            _logger.LogWarning($"Dify API did not provide TaskId, generating fallback ID: {taskId}");
+        }
+
         var task = new DifyWorkflowTask
         {
-            TaskId = result.TaskId ?? Guid.NewGuid().ToString(),
+            TaskId = taskId,
             WorkflowRunId = result.WorkflowRunId,
             WorkflowId = args.WorkflowId,
             ConversationId = args.ConversationId ?? message.MessageId,

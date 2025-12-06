@@ -66,6 +66,7 @@ public class DifyWorkflowService
                 _logger.LogError($"Dify API error: {response.StatusCode} - {responseContent}");
                 return new DifyWorkflowResponse
                 {
+                    WorkflowRunId = string.Empty,
                     Status = DifyWorkflowStatus.Failed,
                     Error = $"API error: {response.StatusCode}"
                 };
@@ -81,6 +82,7 @@ public class DifyWorkflowService
             _logger.LogError(ex, $"Error executing Dify workflow: {workflowId}");
             return new DifyWorkflowResponse
             {
+                WorkflowRunId = string.Empty,
                 Status = DifyWorkflowStatus.Failed,
                 Error = ex.Message
             };
