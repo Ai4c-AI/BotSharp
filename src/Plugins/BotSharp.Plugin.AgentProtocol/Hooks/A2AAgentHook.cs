@@ -36,7 +36,9 @@ public class A2AAgentHook : AgentHookBase
             var agents = routing.GetRoutableAgents(_agent.Profiles);
 
             // Get A2A agents from registry
-            var a2aAgents = _registry.GetAllAgentsAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            // Note: OnInstructionLoaded is synchronous by design in AgentHookBase
+            // Using Task.Run to prevent blocking the synchronization context
+            var a2aAgents = Task.Run(async () => await _registry.GetAllAgentsAsync()).GetAwaiter().GetResult();
             
             if (a2aAgents.Any())
             {

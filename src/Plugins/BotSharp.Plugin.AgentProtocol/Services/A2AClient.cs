@@ -213,13 +213,14 @@ public class A2AClient : IA2AClient
 
     private string? GetAgentEndpoint(string agentId)
     {
-        // Check configured remote agents
+        // Check configured remote agents first
         if (_settings.RemoteAgents.TryGetValue(agentId, out var endpoint))
         {
             return endpoint;
         }
 
-        // Could query registry here if needed
+        // Future enhancement: Query registry for endpoint if not found in configuration
+        // This would enable fully dynamic agent discovery without pre-configuration
         return null;
     }
 }
