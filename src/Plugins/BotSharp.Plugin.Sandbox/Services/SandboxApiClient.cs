@@ -88,7 +88,7 @@ public class SandboxApiClient
         var maxLength = _settings.ResponseMaxLength > 0 ? _settings.ResponseMaxLength : content.Length;
         if (content.Length > maxLength)
         {
-            return $"{content.Substring(0, maxLength)}...(truncated)";
+            return $"{content[..maxLength]}...(truncated)";
         }
 
         return content;
