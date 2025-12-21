@@ -1,0 +1,22 @@
+{
+  "name": "util-sandbox-file_write",
+  "description": "Write text content to a sandbox file path.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "path": {
+        "type": "string",
+        "description": "Absolute file path inside the sandbox."
+      },
+      "content": {
+        "type": "string",
+        "description": "Plain text content to write."
+      },
+      "append": {
+        "type": "boolean",
+        "description": "Append instead of overwrite when true."
+      }
+    },
+    "required": [ "path", "content" ]
+  }
+}

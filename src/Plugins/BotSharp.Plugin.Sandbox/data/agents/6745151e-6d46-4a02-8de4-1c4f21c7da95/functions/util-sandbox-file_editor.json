@@ -1,0 +1,26 @@
+{
+  "name": "util-sandbox-file_editor",
+  "description": "Apply precise string replace edits to a sandbox file.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "path": {
+        "type": "string",
+        "description": "Target file path inside the sandbox."
+      },
+      "search_text": {
+        "type": "string",
+        "description": "Text to match."
+      },
+      "replacement": {
+        "type": "string",
+        "description": "Replacement text."
+      },
+      "use_regex": {
+        "type": "boolean",
+        "description": "Interpret search_text as regex."
+      }
+    },
+    "required": [ "path", "search_text", "replacement" ]
+  }
+}

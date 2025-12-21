@@ -1,0 +1,22 @@
+{
+  "name": "util-sandbox-file_read",
+  "description": "Read the content of a file from the sandbox filesystem.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "path": {
+        "type": "string",
+        "description": "Absolute file path inside the sandbox."
+      },
+      "offset": {
+        "type": "integer",
+        "description": "Optional byte offset to start reading from."
+      },
+      "limit": {
+        "type": "integer",
+        "description": "Optional max number of bytes to read."
+      }
+    },
+    "required": [ "path" ]
+  }
+}

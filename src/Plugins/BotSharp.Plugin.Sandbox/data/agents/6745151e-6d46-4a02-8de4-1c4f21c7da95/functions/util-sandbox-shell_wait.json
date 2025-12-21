@@ -1,0 +1,18 @@
+{
+  "name": "util-sandbox-shell_wait",
+  "description": "Wait for an asynchronous sandbox shell execution to finish and return its result.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "task_id": {
+        "type": "string",
+        "description": "Task id returned by util-sandbox-shell_exec."
+      },
+      "timeout": {
+        "type": "integer",
+        "description": "Optional timeout seconds for waiting."
+      }
+    },
+    "required": [ "task_id" ]
+  }
+}

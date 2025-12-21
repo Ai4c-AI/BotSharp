@@ -1,0 +1,13 @@
+{
+  "name": "util-sandbox-browser_screenshot",
+  "description": "Capture the current sandbox browser viewport as a screenshot.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "full_page": {
+        "type": "boolean",
+        "description": "Capture full page when true instead of viewport."
+      }
+    }
+  }
+}
