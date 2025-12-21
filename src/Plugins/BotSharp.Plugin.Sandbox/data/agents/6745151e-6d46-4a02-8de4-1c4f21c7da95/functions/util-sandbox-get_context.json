@@ -1,0 +1,8 @@
+{
+  "name": "util-sandbox-get_context",
+  "description": "Retrieve sandbox environment information such as version and resource limits.",
+  "parameters": {
+    "type": "object",
+    "properties": {}
+  }
+}

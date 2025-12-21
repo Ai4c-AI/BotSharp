@@ -1,0 +1,22 @@
+{
+  "name": "util-sandbox-jupyter_exec",
+  "description": "Execute code through the sandbox Jupyter kernel.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "code": {
+        "type": "string",
+        "description": "Python or notebook code to run."
+      },
+      "session_id": {
+        "type": "string",
+        "description": "Existing Jupyter session id. Leave empty to run in a transient session."
+      },
+      "timeout": {
+        "type": "integer",
+        "description": "Optional timeout seconds for execution."
+      }
+    },
+    "required": [ "code" ]
+  }
+}

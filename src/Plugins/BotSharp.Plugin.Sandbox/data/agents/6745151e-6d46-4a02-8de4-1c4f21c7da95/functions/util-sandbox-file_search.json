@@ -1,0 +1,22 @@
+{
+  "name": "util-sandbox-file_search",
+  "description": "Search for a string within files in the sandbox.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "path": {
+        "type": "string",
+        "description": "Directory or file path to search."
+      },
+      "query": {
+        "type": "string",
+        "description": "Text or pattern to search for."
+      },
+      "is_regex": {
+        "type": "boolean",
+        "description": "Treat query as a regular expression when true."
+      }
+    },
+    "required": [ "path", "query" ]
+  }
+}

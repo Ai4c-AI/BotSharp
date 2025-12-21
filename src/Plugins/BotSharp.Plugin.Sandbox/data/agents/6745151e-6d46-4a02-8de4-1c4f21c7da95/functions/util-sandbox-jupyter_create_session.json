@@ -1,0 +1,13 @@
+{
+  "name": "util-sandbox-jupyter_create_session",
+  "description": "Create a new interactive Jupyter session inside the sandbox.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "kernel": {
+        "type": "string",
+        "description": "Preferred kernel (e.g., python)."
+      }
+    }
+  }
+}

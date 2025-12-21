@@ -1,0 +1,26 @@
+{
+  "name": "util-sandbox-shell_exec",
+  "description": "Execute a shell command inside the isolated AIO sandbox container.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "command": {
+        "type": "string",
+        "description": "Shell command to run."
+      },
+      "timeout": {
+        "type": "integer",
+        "description": "Optional timeout seconds for the command."
+      },
+      "workdir": {
+        "type": "string",
+        "description": "Working directory inside the sandbox."
+      },
+      "async": {
+        "type": "boolean",
+        "description": "Whether to run asynchronously and return a task id."
+      }
+    },
+    "required": [ "command" ]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "util-sandbox-check_packages",
+  "description": "Check installed packages inside the sandbox for the given language runtime.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "lang": {
+        "type": "string",
+        "description": "Language to inspect, such as python or nodejs."
+      }
+    },
+    "required": [ "lang" ]
+  }
+}
