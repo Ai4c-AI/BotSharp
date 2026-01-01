@@ -1,0 +1,17 @@
+{
+  "id": "124ac34c-f469-8785-bacd-48cd03d65a5c",
+  "name": "Research Coordinator",
+  "type": "routing",
+  "description": "负责规划和执行深度研究任务，协调搜索和写作。",
+  "routingRule": {
+    "type": "reasoning",
+    "description": "当信息不足时，路由给 Web Searcher；当信息充足时，路由给 Report Writer。",
+    "field": "next_action",
+    "required": true,
+    "redirect_to": "web-searcher-id"
+  },
+  "disabled": false,
+  "isPublic": true,
+  "profiles": [ "Research" ],
+  "labels": [ "experiment" ]
+}

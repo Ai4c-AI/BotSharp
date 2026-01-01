@@ -8,6 +8,7 @@
     <PackageVersion Include="EntityFramework" Version="6.4.4" />
     <PackageVersion Include="Google_GenerativeAI" Version="3.4.1" />
     <PackageVersion Include="Google_GenerativeAI.Live" Version="3.4.1" />
+    <PackageVersion Include="Microsoft.AspNetCore.SignalR.Client" Version="10.0.1" />
     <PackageVersion Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageVersion Include="Polly" Version="8.4.2" />
     <PackageVersion Include="SharpFuzz" Version="2.2.0" />

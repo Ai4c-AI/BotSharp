@@ -3,6 +3,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Python.Runtime;
 using System.IO;
+using BotSharp.Plugin.PythonInterpreter.Services;
 
 namespace BotSharp.Plugin.PythonInterpreter;
 
@@ -23,6 +24,7 @@ public class PythonInterpreterPlugin : IBotSharpAppPlugin
 
         services.AddScoped<IAgentUtilityHook, PyProgrammerUtilityHook>();
         services.AddScoped<ICodeProcessor, PyCodeInterpreter>();
+        services.AddScoped<PythonScriptExecutor>();
     }
 
     public void Configure(IApplicationBuilder app)

@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace BotSharp.Plugin.PythonInterpreter.Helpers;
 
@@ -174,5 +175,54 @@ internal static class PyPackageHelper
         };
 
         return packageMappings.TryGetValue(importName, out var actualName) ? actualName : importName;
+    }
+
+    /// <summary>
+    /// Install packages from requirements.txt
+    /// </summary>
+    /// <param name="requirementsPath"></param>
+    /// <returns></returns>
+    internal static async Task<PackageInstallResult> InstallRequirementsFromFile(string requirementsPath)
+    {
+        if (!File.Exists(requirementsPath))
+        {
+            return new PackageInstallResult { Success = false, ErrorMsg = "File not found" };
+        }
+
+        try
+        {
+            var startInfo = new ProcessStartInfo
+            {
+                FileName = "pip",
+                Arguments = $"install -r \"{requirementsPath}\"",
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+                CreateNoWindow = true
+            };
+
+            using var process = Process.Start(startInfo);
+            if (process == null)
+            {
+                return new PackageInstallResult { Success = false, ErrorMsg = "Failed to start pip" };
+            }
+
+            await process.WaitForExitAsync();
+            var output = await process.StandardOutput.ReadToEndAsync();
+            var error = await process.StandardError.ReadToEndAsync();
+
+            if (process.ExitCode == 0)
+            {
+                return new PackageInstallResult { Success = true };
+            }
+            else
+            {
+                return new PackageInstallResult { Success = false, ErrorMsg = error };
+            }
+        }
+        catch (Exception ex)
+        {
+            return new PackageInstallResult { Success = false, ErrorMsg = ex.Message };
+        }
     }
 }
